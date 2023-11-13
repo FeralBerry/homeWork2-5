@@ -1,7 +1,6 @@
-import java.io.IOException;
 import java.util.regex.Pattern;
 
-public class Main extends IOException {
+public class Main {
     public static void main(String[] args) {
         checkAuth("123412341_","","");
     }
