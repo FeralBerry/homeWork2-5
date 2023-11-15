@@ -1,54 +1,29 @@
-import java.util.regex.Pattern;
-
 public class Main {
     public static void main(String[] args) {
-        checkAuth("123412341_","","");
+        String login = "1234123411111_";
+        String password = "1231gjghfdbk";
+        String confirmPassword = "123";
+        checkAuth(login,password,confirmPassword);
     }
-    public static void checkAuth(String login, String password, String confirmPassword) {
-        char[] loginCharArray = login.toCharArray();
-        char[] passwordCharArray = password.toCharArray();
+    private static void checkAuth(String login, String password, String confirmPassword) {
         try {
-            if (loginCharArray.length > 20) {
-                throw new ArrayIndexOutOfBoundsException();
+            if (login.length() > 20) {
+                CustomException.isValidPasswordAndLoginLength(login.length());
             }
-            if(loginCharArray.length == 0){
-                throw new NullPointerException();
-            }
-        } catch(ArrayIndexOutOfBoundsException | NullPointerException e){
+            CustomException.isValidPasswordAndLogin(login);
+        } catch(ArrayIndexOutOfBoundsException | CustomException e){
             System.out.println ("WrongLoginException");
-        } finally {
-            try {
-                if (!isValidPasswordAndLogin(login)) {
-                    throw new RuntimeException();
-                }
-            } catch (RuntimeException e) {
-                System.out.println("WrongLoginException");
-            }
         }
         try{
-            if (passwordCharArray.length > 20) {
-                throw new ArrayIndexOutOfBoundsException();
+            if (password.length() > 20) {
+                CustomException.isValidPasswordAndLoginLength(password.length());
             }
-            if(passwordCharArray.length == 0){
-                throw new NullPointerException();
-            }
-        } catch (ArrayIndexOutOfBoundsException | NullPointerException e){
+            CustomException.isValidPasswordAndLogin(password);
+            CustomException.equalsPasswordAdnConfirmPassword(password,confirmPassword);
+        } catch (ArrayIndexOutOfBoundsException | CustomException e){
             System.out.println ("WrongPasswordException");
-        } finally {
-            try {
-                if (!isValidPasswordAndLogin(password)) {
-                    throw new RuntimeException();
-                }
-                if(!password.equals(confirmPassword)){
-                    throw new RuntimeException("WrongPasswordException");
-                }
-            } catch (RuntimeException e){
-                System.out.println ("WrongPasswordException");
-            }
         }
     }
-    private static boolean isValidPasswordAndLogin(String str) {
-        return Pattern.matches("^[a-zA-Z0-9_]*$", str);
-    }
+
 
 }
